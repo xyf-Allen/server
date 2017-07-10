@@ -1,0 +1,22 @@
+{
+  "name": "w1701-server11",
+  "version": "1.0.0",
+  "description": "",
+  "main": "serever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin":{
+     "start":"./serever.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yueyingjun/server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yueyingjun/server/issues"
+  },
+  "homepage": "https://github.com/yueyingjun/server#readme"
+}

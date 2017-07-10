@@ -1,10 +1,13 @@
+#!/usr/bin/env  node
+//angular
+//1. nodejs   没有给我们提供服务器，就没有给我们指定访问的规则
+
+// 自己去指定访问规则 , 根据用户的需求，可以指定相应的访问规则
+
+//  我可以指定自己的规则，让用户去遵守
 var http=require("http");
 var path=require("path");
-/*
-*    服务器： xxx/  1.html   js运行  回调地狱
-*
-*    客户端： 1.html  浏览器的缓存  1000*100 100
-* */
+const zlib = require('zlib');
 var config=require("./config.json");
 var fs=require("fs");
 http.createServer(function(req,res){
@@ -49,17 +52,24 @@ http.createServer(function(req,res){
                         }else {
 
 
+                            console.log(req.headers["cookie"]);
                             var type = config.type[ext];
 
-                            fs.readFile(fullpath, function (error, data) {
+
                                 res.setHeader("content-type", type + ";charset=utf-8");
 
-                                res.setHeader("cache-control", "max-age=" + 1000 * 10);
+                                res.setHeader("cache-control", "max-age=10000" );
                                 res.setHeader("last-modified", mtime);
 
 
-                                res.end(data);
-                            })
+                                res.setHeader("Content-Encoding","gzip");
+
+                                res.setHeader("set-cookie","name=zhangsan");
+
+                                var read=fs.createReadStream(fullpath);
+
+
+                                read.pipe(zlib.createGzip()).pipe(res);
 
 
                         }
@@ -72,7 +82,9 @@ http.createServer(function(req,res){
 
     }
 
-}).listen(8888);
+}).listen(8888,function(){
+    console.log("服务器启动")
+});
 
 
 
